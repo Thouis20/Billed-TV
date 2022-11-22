@@ -101,9 +101,5 @@ for pt in zip(*loc270[::-1]):
 #all crown locations are combined into a singe array.
 crownLoc = [loc0[:], loc90[:], loc180[:], loc270[:]]
 
-#prints out the final crowns
-print("Crowns:")
-print(crown_arr[:])
-
 cv.imshow("Crown Board", board)
 cv.waitKey(0)
