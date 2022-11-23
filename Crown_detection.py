@@ -14,10 +14,11 @@ temp90 = cv.imread('dataset/Crown_Template90.png',0)
 temp180 = cv.imread('dataset/Crown_Template180.png',0)
 temp270 = cv.imread('dataset/Crown_Template270.png',0)
 
-#store width and height of template in w and h
-w, h = temp0.shape[::-1]
+#store width and height of template in w and h, in both 0 and 90 orientation
+w0, h0 = temp0.shape[::-1]
+w90, h90 = temp90.shape[::-1]
 
-#import board
+#import board with imagenr
 board = cv.imread('dataset/Cropped and perspective corrected boards/' + str(imagenr) + '.jpg')
 
 #convert input board to greyscale
@@ -32,7 +33,7 @@ res90 = cv.matchTemplate(board_gray,temp90,cv.TM_CCOEFF_NORMED)
 res180 = cv.matchTemplate(board_gray,temp180,cv.TM_CCOEFF_NORMED)
 res270 = cv.matchTemplate(board_gray,temp270,cv.TM_CCOEFF_NORMED)
 
-#find where in the template matched image, the match is over the threshhold
+#find locations in the template matched image, the results are over the threshhold
 loc0 = np.where(res0 >= threshold)
 loc90 = np.where(res90 >= threshold)
 loc180 = np.where(res180 >= threshold)
@@ -41,7 +42,7 @@ loc270 = np.where(res270 >= threshold)
 #crown counter used to find crowns counted multiple times
 crowns = 0
 
-#go through all locations from template mathing with upright template
+#go through all locations from template mathing with the upright template
 for currLoc in zip(*loc0[::-1]):
     #boolean to determine whether to count a crown or not
     countThis = True
@@ -50,76 +51,58 @@ for currLoc in zip(*loc0[::-1]):
         #calculate distance to previous crowns
         xDist = abs(loc0[0][i] - currLoc[1])
         yDist = abs(loc0[1][i] - currLoc[0])
-        #if crown is too close, count boolean becomes false
-        if(xDist < 5) and (yDist) < 5):
+        #if distance to before registered crowns is less than 5, count boolean becomes false
+        if(xDist < 5) and (yDist < 5):
             countThis = False
     #add one to crowns
     crowns += 1
-    #if crown is not a duplicate, add to crown array
+    #if countThis is true, and crown is not a duplicate, put rectangle around and add to crown array
     if countThis:
-        cv.rectangle(board, currLoc, (currLoc[0] + w, currLoc[1] + h), (0,0,255), 2)
+        cv.rectangle(board, currLoc, (currLoc[0] + w0, currLoc[1] + h0), (0,0,255), 2)
         crown_arr[math.floor(currLoc[1]/100),math.floor(currLoc[0]/100)] += 1
 
 #same procedure for 90,180,270 degree templates
 #90:
 crowns = 0
 for currLoc in zip(*loc90[::-1]):
-    #boolean to determine whether to count a crown or not
     countThis = True
-    #go through all crowns detected
     for i in range(crowns):
-        #calculate distance to previous crowns
         xDist = abs(loc90[0][i] - currLoc[1])
         yDist = abs(loc90[1][i] - currLoc[0])
-        #if crown is too close, count boolean becomes false
         if(xDist < 5) and (yDist < 5):
             countThis = False
-    #add one to crowns
     crowns += 1
-    #if crown is not a duplicate, add to crown array
     if countThis:
-        cv.rectangle(board, currLoc, (currLoc[0] + w, currLoc[1] + h), (0,0,255), 2)
+        cv.rectangle(board, currLoc, (currLoc[0] + w90, currLoc[1] + h90), (0,0,255), 2)
         crown_arr[math.floor(currLoc[1]/100),math.floor(currLoc[0]/100)] += 1
 #180:
 crowns = 0
 for currLoc in zip(*loc180[::-1]):
-    #boolean to determine whether to count a crown or not
     countThis = True
-    #go through all crowns detected
     for i in range(crowns):
-        #calculate distance to previous crowns
         xDist = abs(loc180[0][i] - currLoc[1])
         yDist = abs(loc180[1][i] - currLoc[0])
-        #if crown is too close, count boolean becomes false
         if(xDist < 5) and (yDist < 5):
             countThis = False
-    #add one to crowns
     crowns += 1
-    #if crown is not a duplicate, add to crown array
     if countThis:
-        cv.rectangle(board, currLoc, (currLoc[0] + w, currLoc[1] + h), (0,0,255), 2)
+        cv.rectangle(board, currLoc, (currLoc[0] + w0, currLoc[1] + h0), (0,0,255), 2)
         crown_arr[math.floor(currLoc[1]/100),math.floor(currLoc[0]/100)] += 1
 #270:
 crowns = 0
 for currLoc in zip(*loc270[::-1]):
-    #boolean to determine whether to count a crown or not
     countThis = True
-    #go through all crowns detected
     for i in range(crowns):
-        #calculate distance to previous crowns
         xDist = abs(loc270[0][i] - currLoc[1])
         yDist = abs(loc270[1][i] - currLoc[0])
-        #if crown is too close, count boolean becomes false
-        if(xDist < 5) and (yDist) < 5):
+        if(xDist < 5) and (yDist < 5):
             countThis = False
-    #add one to crowns
     crowns += 1
-    #if crown is not a duplicate, add to crown array
     if countThis:
-        cv.rectangle(board, currLoc, (currLoc[0] + w, currLoc[1] + h), (0,0,255), 2)
+        cv.rectangle(board, currLoc, (currLoc[0] + w90, currLoc[1] + h90), (0,0,255), 2)
         crown_arr[math.floor(currLoc[1]/100),math.floor(currLoc[0]/100)] += 1
 
-#all crown locations in an array
+#all crown locations in one array
 crownLoc = [loc0[:],loc90[:],loc180[:],loc270[:]]
 
 cv.imshow("Crown Board", board)
