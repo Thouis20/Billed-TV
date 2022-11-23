@@ -5,7 +5,7 @@ import numpy as np
 import math
 
 #image being analyzed and threshold
-imagenr = 3
+imagenr = 1
 threshold = 0.65
 
 #import crown templates in all orientations
