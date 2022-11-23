@@ -1,1 +1,3 @@
-"# Billed-TV" 
+King Domino score calculator
+
+Image processing mini project
