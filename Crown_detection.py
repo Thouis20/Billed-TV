@@ -51,7 +51,7 @@ for currLoc in zip(*loc0[::-1]):
         xDist = abs(loc0[0][i] - currLoc[1])
         yDist = abs(loc0[1][i] - currLoc[0])
         #if crown is too close, count boolean becomes false
-        if(abs(loc0[0][i] - currLoc[1]) < 5) and (abs(loc0[1][i] - currLoc[0]) < 5):
+        if(xDist < 5) and (yDist) < 5):
             countThis = False
     #add one to crowns
     crowns += 1
@@ -72,7 +72,7 @@ for currLoc in zip(*loc90[::-1]):
         xDist = abs(loc90[0][i] - currLoc[1])
         yDist = abs(loc90[1][i] - currLoc[0])
         #if crown is too close, count boolean becomes false
-        if(abs(loc90[0][i] - currLoc[1]) < 5) and (abs(loc90[1][i] - currLoc[0]) < 5):
+        if(xDist < 5) and (yDist < 5):
             countThis = False
     #add one to crowns
     crowns += 1
@@ -91,7 +91,7 @@ for currLoc in zip(*loc180[::-1]):
         xDist = abs(loc180[0][i] - currLoc[1])
         yDist = abs(loc180[1][i] - currLoc[0])
         #if crown is too close, count boolean becomes false
-        if(abs(loc180[0][i] - currLoc[1]) < 5) and (abs(loc180[1][i] - currLoc[0]) < 5):
+        if(xDist < 5) and (yDist < 5):
             countThis = False
     #add one to crowns
     crowns += 1
@@ -110,7 +110,7 @@ for currLoc in zip(*loc270[::-1]):
         xDist = abs(loc270[0][i] - currLoc[1])
         yDist = abs(loc270[1][i] - currLoc[0])
         #if crown is too close, count boolean becomes false
-        if(abs(loc270[0][i] - currLoc[1]) < 5) and (abs(loc270[1][i] - currLoc[0]) < 5):
+        if(xDist < 5) and (yDist) < 5):
             countThis = False
     #add one to crowns
     crowns += 1
