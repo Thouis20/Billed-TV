@@ -24,9 +24,6 @@ board = cv.imread('dataset/Cropped and perspective corrected boards/' + str(imag
 #convert input board to greyscale
 board_gray = cv.cvtColor(board, cv.COLOR_BGR2GRAY)
 
-#empty array for storing crowns locations
-crown_arr = np.zeros((5,5))
-
 #template matching with each rotation of the crown mask
 res0 = cv.matchTemplate(board_gray,temp0,cv.TM_CCOEFF_NORMED)
 res90 = cv.matchTemplate(board_gray,temp90,cv.TM_CCOEFF_NORMED)
@@ -39,7 +36,8 @@ loc90 = np.where(res90 >= threshold)
 loc180 = np.where(res180 >= threshold)
 loc270 = np.where(res270 >= threshold)
 
-#crown counter used to find crowns counted multiple times
+#empty array for storing crowns locations and crown counter used to find crowns counted more than once
+crown_arr = np.zeros((5,5))
 crowns = 0
 
 #go through all locations from template mathing with the upright template
