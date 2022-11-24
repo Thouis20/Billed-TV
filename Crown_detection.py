@@ -33,7 +33,7 @@ res90 = cv.matchTemplate(board_gray,temp90,cv.TM_CCOEFF_NORMED)
 res180 = cv.matchTemplate(board_gray,temp180,cv.TM_CCOEFF_NORMED)
 res270 = cv.matchTemplate(board_gray,temp270,cv.TM_CCOEFF_NORMED)
 
-#find locations in the template matched image, the results are over the threshhold
+#find locations in the template matched image, where the results are over the threshhold
 loc0 = np.where(res0 >= threshold)
 loc90 = np.where(res90 >= threshold)
 loc180 = np.where(res180 >= threshold)
