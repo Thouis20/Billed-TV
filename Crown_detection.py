@@ -36,10 +36,12 @@ loc90 = np.where(res90 >= threshold)
 loc180 = np.where(res180 >= threshold)
 loc270 = np.where(res270 >= threshold)
 
-#empty array for storing crowns locations and crown counter used to find crowns counted more than once
+#empty array for storing crowns locations
 crown_arr = np.zeros((5,5))
-crowns = 0
 
+#the procedure for finding the crowns counted more than once
+#crown counter to compare the current crown to the previous
+crowns = 0
 #go through all locations from template mathing with the upright template
 for currLoc in zip(*loc0[::-1]):
     #boolean to determine whether to count a crown or not
