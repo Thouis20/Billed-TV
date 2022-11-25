@@ -102,8 +102,5 @@ for currLoc in zip(*loc270[::-1]):
         cv.rectangle(board, currLoc, (currLoc[0] + w90, currLoc[1] + h90), (0,0,255), 2)
         crown_arr[math.floor(currLoc[1]/100),math.floor(currLoc[0]/100)] += 1
 
-#all crown locations in one array
-crownLoc = [loc0[:],loc90[:],loc180[:],loc270[:]]
-
 cv.imshow("Crown Board", board)
 cv.waitKey(0)
